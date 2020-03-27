@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Api\V1\Mp\UtilsController as MP_Utils;
+use App\Http\Controllers\Api\V1\Mp\ClientsController as Clients;
 
 class MessageController extends Controller
 {
@@ -56,8 +57,13 @@ class MessageController extends Controller
                 }
             }
         );
+        //接收用户信息同时更新用户表，公众号表信息
+        $bool = (new Clients())->SaveClientsInfo();
+        if (!$bool) {
+            return false;
+        }
         $response = $app->server->serve();
-        file_put_contents('wx\test.txt', $response, FILE_APPEND);
+//        file_put_contents('wx\test.txt', $response, FILE_APPEND);
         return $response;
     }
     //获取用户信息

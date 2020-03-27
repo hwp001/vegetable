@@ -44,4 +44,18 @@ class Tool
             return json_decode($res);
         }
     }
+
+    //自定义随机数
+    public static function random()
+    {
+        $str =  'faaofafjaiofjaoifaofnecahfereufjsdoin8924348nd7723d2hcafha2';
+        $randstr = '';
+        //生成六位随机数
+        for ($i=0; $i<6; $i++) {
+            $len = strlen($str);
+            $num = mt_rand(0, $len-1);
+            $randstr .= substr($str, $num, 1);
+        }
+        return $randstr;
+    }
 }

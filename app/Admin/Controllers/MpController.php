@@ -28,7 +28,7 @@ class MpController extends AdminController
         $grid = new Grid(new Mp());
         $grid->column('id', __('Id'));
         $grid->column('cid', __('Cid'));
-        $grid->column('client.name', _('用户名'));
+        $grid->column('client.name', _('真实姓名'));
         $grid->column('mp_openid', __('Mp openid'));
         $grid->column('wx_openid', __('Wx openid'));
         $grid->column('unionid', __('Unionid'));

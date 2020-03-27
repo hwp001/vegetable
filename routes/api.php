@@ -25,7 +25,8 @@ $api->version('v1',['namespace' => 'App\Http\Controllers\Api\V1\Mp'], function($
     $api->group([],function ($api){
         $api->any('main','MainController@index');
         $api->any('menu','MainController@menu');
-        $api->any('test','MainController@replyMessage');
+        $api->any('test','ClientsController@downImage');
+        $api->any('test1','ClientsController@downImg');
     });
 
 });

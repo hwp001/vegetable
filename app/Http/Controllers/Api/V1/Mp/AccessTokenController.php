@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Mp\UtilsController as MP_Utils;
 class AccessTokenController extends Controller
 {
 
+
     //获取access_token
     public function getAccessToken()
     {
@@ -28,4 +29,6 @@ class AccessTokenController extends Controller
         }
         return Redis::get('access_token');
     }
+
+
 }

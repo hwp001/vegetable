@@ -12,22 +12,7 @@ class testController extends Controller
 {
     public function index()
     {
-        $signature = $_GET["signature"];
-	    $timestamp = $_GET["timestamp"];
-	    $nonce = $_GET["nonce"];
-		
-	    $token = 'hwp';
-	    $tmpArr = array($token, $timestamp, $nonce);
-	    sort($tmpArr, SORT_STRING);
-	    $tmpStr = implode( $tmpArr );
-	    $tmpStr = sha1( $tmpStr );
-	    file_put_contents('wx\text.txt', $signature.'-'.$timestamp.'-'.$nonce.'-'.$_GET['echostr']);
-	    if( $tmpStr == $signature ){
-	        return $_GET["echostr"];
-	    }else{
-	        return false;
-	    }
-	
+     return 111111;
     }
 
     public function hello()
