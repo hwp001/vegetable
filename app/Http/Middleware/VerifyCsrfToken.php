@@ -9,7 +9,7 @@ class VerifyCsrfToken extends Middleware
     /**
      * Indicates whether the XSRF-TOKEN cookie should be set on the response.
      *
-     * @var bool
+     * @var bools
      */
     protected $addHttpCookie = true;
 
@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'test',
+        'api/joinMP'
     ];
 }

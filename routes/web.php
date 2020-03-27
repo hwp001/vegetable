@@ -16,3 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('test','test\testController@index');
+
+Route::get('hello','test\testController@hello');
+
+Route::get('mm','Api\V1\MpController@get_access_token');
+
+Route::get('mp','Api\V1\MpController@hello');
+
+//获取

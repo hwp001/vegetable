@@ -83,9 +83,7 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-                <image class="" src="{{ $imgUrl }}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="">
-                    
-                </image>
+
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
