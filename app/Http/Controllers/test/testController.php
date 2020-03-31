@@ -3,20 +3,16 @@
 namespace App\Http\Controllers\test;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Client;
+use App\Models\Goods;
+use App\Models\Order;
+use Request;
 use EasyWeChat\Factory;
-use App\Models\Client as Client;
 use Illuminate\Support\Facades\Log;
-
 class testController extends Controller
 {
     public function index()
     {
-     return 111111;
-    }
-
-    public function hello()
-    {
-       return json_encode('hello');
+        return (new Order())->times();
     }
 }

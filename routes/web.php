@@ -23,4 +23,7 @@ Route::get('mm','Api\V1\MpController@get_access_token');
 
 Route::get('mp','Api\V1\MpController@hello');
 
-//获取
+//前端接口数据
+Route::any('/getClients',function (){
+   return \App\Models\Client::all(['id','username as text']);
+});

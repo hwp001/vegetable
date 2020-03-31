@@ -107,4 +107,10 @@ class ClientController extends AdminController
 
         return $form;
     }
+
+    //获得全部用户 id username
+    public function getClientsIdAndUsername()
+    {
+        return Client::all(['id','username as text']);
+    }
 }

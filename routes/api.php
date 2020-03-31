@@ -25,8 +25,18 @@ $api->version('v1',['namespace' => 'App\Http\Controllers\Api\V1\Mp'], function($
     $api->group([],function ($api){
         $api->any('main','MainController@index');
         $api->any('menu','MainController@menu');
-        $api->any('test','ClientsController@downImage');
+        $api->any('test','times@times');
         $api->any('test1','ClientsController@downImg');
     });
 
 });
+
+$api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Admin'],function ($api){
+    //前端接口数据请求
+    $api->any('getClients',function (){
+        return \App\Models\Client::all(['id','username']);
+    });
+});
+/*$api->version('v1',['namespace' => 'App\Admin\Controllers'],function($api){
+    $api->any('district','GoodsController@district');
+});*/

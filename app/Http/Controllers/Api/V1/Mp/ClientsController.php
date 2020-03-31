@@ -14,6 +14,7 @@ class ClientsController extends Controller
     //获取用户信息 并存取
     public function SaveClientsInfo()
     {
+
         $Client = new Client();
         $Mp = new Mp();
         if (Redis::exists('openid')) {
