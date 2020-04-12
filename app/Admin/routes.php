@@ -16,6 +16,7 @@ Route::group([
     $router->resource('goods/image', 'ImageController');
     $router->resource('goods/detail', 'GoodsController');
     $router->resource('goods/comment', 'CommentController');
+    $router->resource('goods/activity','ActivityController');
     $router->resource('orders/cargo', 'CargoController');
     $router->resource('orders/detail', 'OrderController');
 

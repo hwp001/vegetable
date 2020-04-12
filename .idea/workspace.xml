@@ -143,6 +143,11 @@
       <workItem from="1585271537350" duration="18523000" />
       <workItem from="1585311140373" duration="32080000" />
       <workItem from="1585446673108" duration="43517000" />
+      <workItem from="1585622141659" duration="11986000" />
+      <workItem from="1585881516199" duration="38950000" />
+      <workItem from="1586228343071" duration="3816000" />
+      <workItem from="1586324647266" duration="23670000" />
+      <workItem from="1586606345821" duration="9671000" />
     </task>
     <servers />
   </component>
@@ -153,18 +158,22 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="168" y="40" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585202940155">
+    <state x="306" y="44" key="#Notifications" timestamp="1586066782889">
       <screen x="62" y="0" width="1304" height="768" />
     </state>
-    <state x="168" y="40" key="#com.intellij.execution.impl.EditConfigurationsDialog/62.0.1304.768@62.0.1304.768" timestamp="1585202940155" />
+    <state x="306" y="44" key="#Notifications/62.0.1304.768@62.0.1304.768" timestamp="1586066782889" />
+    <state x="168" y="40" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585900667693">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="168" y="40" key="#com.intellij.execution.impl.EditConfigurationsDialog/62.0.1304.768@62.0.1304.768" timestamp="1585900667693" />
     <state x="468" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1585367962639">
       <screen x="62" y="0" width="1304" height="768" />
     </state>
     <state x="468" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/62.0.1304.768@62.0.1304.768" timestamp="1585367962639" />
-    <state x="444" y="140" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1585566671823">
+    <state x="444" y="140" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1586348527567">
       <screen x="62" y="0" width="1304" height="768" />
     </state>
-    <state x="444" y="140" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/62.0.1304.768@62.0.1304.768" timestamp="1585566671823" />
+    <state x="444" y="140" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/62.0.1304.768@62.0.1304.768" timestamp="1586348527567" />
     <state x="486" y="195" key="NewPhpClassDialog" timestamp="1585367820819">
       <screen x="62" y="0" width="1304" height="768" />
     </state>
@@ -173,10 +182,122 @@
       <screen x="62" y="0" width="1304" height="768" />
     </state>
     <state x="215" y="14" key="SettingsEditor/62.0.1304.768@62.0.1304.768" timestamp="1585377767032" />
-    <state x="377" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1585572859975">
+    <state x="154" y="92" width="1120" height="584" key="dock-window-1" timestamp="1586066493803">
       <screen x="62" y="0" width="1304" height="768" />
     </state>
-    <state x="377" y="89" width="672" height="678" key="search.everywhere.popup/62.0.1304.768@62.0.1304.768" timestamp="1585572859975" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-1/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-10" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-10/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-11" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-11/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-12" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-12/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-13" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-13/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-14" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-14/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-15" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-15/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-16" timestamp="1586066493803">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-16/62.0.1304.768@62.0.1304.768" timestamp="1586066493803" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-17" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-17/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-18" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-18/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-19" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-19/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-2" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-2/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-20" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-20/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-21" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-21/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-22" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-22/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-23" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-23/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-24" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-24/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-25" timestamp="1586066493804">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-25/62.0.1304.768@62.0.1304.768" timestamp="1586066493804" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-26" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-26/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-27" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-27/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-3" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-3/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-4" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-4/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-5" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-5/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-6" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-6/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-7" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-7/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-8" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-8/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="154" y="92" width="1120" height="584" key="dock-window-9" timestamp="1586066493805">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="154" y="92" width="1120" height="584" key="dock-window-9/62.0.1304.768@62.0.1304.768" timestamp="1586066493805" />
+    <state x="370" y="167" key="run.anything.popup" timestamp="1586066197438">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="370" y="167" key="run.anything.popup/62.0.1304.768@62.0.1304.768" timestamp="1586066197438" />
+    <state x="377" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1586431646761">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="377" y="89" width="672" height="678" key="search.everywhere.popup/62.0.1304.768@62.0.1304.768" timestamp="1586431646761" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -191,9 +312,13 @@
           <line>6</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
+        <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Models/Goods.php</url>
-          <line>35</line>
+          <line>23</line>
+          <properties>
+            <option name="className" value="\App\Models\Goods" />
+            <option name="methodName" value="setImgIdsAttribute" />
+          </properties>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

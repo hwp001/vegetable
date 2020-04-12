@@ -28,7 +28,9 @@ class OrderController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('cid', __('Cid'));
+        $grid->column('gid', __('Gid'));
         $grid->column('cargo_id', __('Cargo id'));
+        $grid->column('count', __('count'));
         $grid->column('gain_way_bool', __('Gain way bool'));
         $grid->column('pay_way_bool', __('Pay way bool'));
         $grid->column('have_way_bool', __('Have way bool'));
@@ -78,7 +80,9 @@ class OrderController extends AdminController
         $form = new Form(new Order());
 
         $form->number('cid', __('Cid'));
+        $form->number('gid', __('Gid'));
         $form->number('cargo_id', __('Cargo id'));
+        $form->number('count', __('Count'));
         $form->switch('gain_way_bool', __('Gain way bool'));
         $form->switch('pay_way_bool', __('Pay way bool'));
         $form->switch('have_way_bool', __('Have way bool'));

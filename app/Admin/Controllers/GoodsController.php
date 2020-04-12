@@ -35,9 +35,9 @@ class GoodsController extends AdminController
         $grid->column('kind_id', __('种类ID'));
         $grid->column('img_ids', __('图片ID'));
         $grid->column('price', __('价格（元）'));
-        $grid->column('discount', __('折扣（%）'));
         $grid->column('count', __('总重量(斤)'));
         $grid->column('cavr', __('收藏量'));
+        $grid->column('buy_state', __('出售方式'));
         $grid->column('state', __('状态'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
@@ -62,7 +62,6 @@ class GoodsController extends AdminController
         $show->field('kind_id', __('Kind id'));
         $show->field('img_ids', __('Img ids'));
         $show->field('price', __('Price'));
-        $show->field('discount', __('Discount'));
         $show->field('count', __('Count'));
         $show->field('cavr', __('Cavr'));
         $show->field('state', __('State'));
@@ -91,9 +90,9 @@ class GoodsController extends AdminController
 //        $form->text('img_ids', __('Img ids'));
         $form->multipleImage('img_ids','配图')->move('/goodImg');
         $form->number('price', __('Price'));
-        $form->number('discount', __('Discount'))->rules('min:1|max:10');
         $form->number('count', __('Count'));
         $form->number('cavr', __('Cavr'));
+        $form->switch('buy_state', __('出售方式'));
         $form->switch('state', __('State'));
         return $form;
     }
