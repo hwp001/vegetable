@@ -57,4 +57,14 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('all','CategoryController@allDetail');
     //根据商品ID获取商品评论
     $api->any('getComment','GoodController@getComment');
+    //新增地址
+    $api->any('addCargo','AddressController@addCargo');
+    //获取地址
+    $api->any('getCargo','AddressController@getCargo');
+    //更新地址
+    $api->any('updateCargo','AddressController@updateCargo');
+    //根据id获得快递地址
+    $api->any('getCargoById','AddressController@getCargoById');
+    //根据id更新快递地址
+    $api->any('updateCargoById','AddressController@updateCargoById');
 });

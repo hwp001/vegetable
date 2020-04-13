@@ -147,7 +147,8 @@
       <workItem from="1585881516199" duration="38950000" />
       <workItem from="1586228343071" duration="3816000" />
       <workItem from="1586324647266" duration="23670000" />
-      <workItem from="1586606345821" duration="9671000" />
+      <workItem from="1586606345821" duration="10269000" />
+      <workItem from="1586746917579" duration="14800000" />
     </task>
     <servers />
   </component>
@@ -309,7 +310,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/test/testController.php</url>
-          <line>6</line>
+          <line>7</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
