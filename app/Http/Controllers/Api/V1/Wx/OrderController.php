@@ -12,10 +12,9 @@ class OrderController extends Controller
     public function addOrder(Request $request)
     {
         $data = $request->all();
-        $bool = (new Order())->addOrder($data);
-        return json_encode($bool);
-        if ($bool) {
-            return json_encode(['statu'=>1]);
+        $res = (new Order())->addOrder($data);
+        if ($res) {
+            return json_encode(['statu'=>1,'data'=>$res]);
         } else {
             return json_encode(['statu'=>0,'err'=>'订单新增失败']);
         }

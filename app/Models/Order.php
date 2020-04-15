@@ -15,16 +15,16 @@ class Order extends Model
     public function getGainWayBoolAttribute($value)
     {
         switch ($value) {
-            case 0 : return '线下自提'; break;
-            case 1 : return '快递配送'; break;
+            case 0 : return '快递配送'; break;
+            case 1 : return '线下自取'; break;
         }
     }
     //支付方式
     public function getPayWayBoolAttribute($value)
     {
         switch ($value){
-            case 0 : return '微信支付'; break;
-            case 1 : return '支付宝支付'; break;
+            case 0 : return '支付宝支付'; break;
+            case 1 : return '微信支付'; break;
             case 2 : return '现金支付'; break;
         }
     }
@@ -42,6 +42,7 @@ class Order extends Model
         switch ($value){
             case 0 : return '未完成'; break;
             case 1 : return '已完成'; break;
+            case 2 : return '已取消'; break;
         }
     }
 
@@ -154,8 +155,9 @@ class Order extends Model
             ['orderNum' => $data['orderNum']],
             $order_data
         );
+        return $res;
         if (!empty($res)) {
-            return true;
+            return $res;
         } else {
             return false;
         }
