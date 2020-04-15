@@ -13,11 +13,11 @@ class OrderController extends Controller
     {
         $data = $request->all();
         $bool = (new Order())->addOrder($data);
+        return json_encode($bool);
         if ($bool) {
             return json_encode(['statu'=>1]);
         } else {
             return json_encode(['statu'=>0,'err'=>'订单新增失败']);
         }
-        return json_encode($data);
     }
 }
