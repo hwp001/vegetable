@@ -12,6 +12,7 @@ class AddressController extends Controller
     public function addCargo(Request $request)
     {
         $data = $request->all();
+
         $bool = (new Cargo())->addCargo($data);
         if ($bool) {
             return json_encode(['statu'=>1]);
@@ -61,6 +62,17 @@ class AddressController extends Controller
             return json_encode(['statu'=>1]);
         } else {
             return json_encode(['statu'=>0,'err'=>'数据并未改变']);
+        }
+    }
+    //根据id删除快递地址
+    public function delCargoById(Request $request)
+    {
+        $data = $request->all();
+        $bool = (new Cargo())->delCargoById($data);
+        if ($bool){
+            return json_encode(['statu'=>1]);
+        } else {
+            return json_encode(['statu'=>0,'err'=>'删除失败']);
         }
     }
 }

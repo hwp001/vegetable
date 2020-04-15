@@ -27,6 +27,8 @@ class Cargo extends Model
     //添加收货地址
     public function addCargo($data)
     {
+        //将 sort: 0=>false 1=>true
+        $data['sort'] = ($data['sort'] == 'true')? 1:0;
         //根据openid 找到cid
        $res = DB::table('bs_mps')
             ->leftJoin('bs_clients','bs_clients.id','bs_mps.cid')
@@ -34,6 +36,7 @@ class Cargo extends Model
             ->get('bs_mps.cid');
         if (!empty($res)){
             $cid = $res[0]->cid;
+
             //构建地址数据
             $cargo_data = [
                 'cid'  => $cid,
@@ -47,10 +50,10 @@ class Cargo extends Model
             $id = Cargo::create($cargo_data)->id;
             if (!empty($id)){
                 //设定默认 若自身为true 则设定其他true为false
-                if ($data['sort'] == 'true') {
+                if ($data['sort'] == 1) {
                    $res = Cargo::where('id','!=',$id)
-                        ->where('sort','true')
-                        ->update(['sort'=>'false']);
+                        ->where('sort', 1)
+                        ->update(['sort'=> 0]);
                    if (!empty($res)){
                        return true;
                    } else {
@@ -74,7 +77,9 @@ class Cargo extends Model
             ->get('bs_mps.cid');
         if (!empty($res)) {
             $cid = $res[0]->cid;
-            $cargo = Cargo::where('cid',$cid)->get(['id','name','phone','address','sex','sort']);
+            $cargo = Cargo::where('cid',$cid)
+                ->orderBy('sort','desc')
+                ->get(['id','name','phone','address','sex','sort']);
             if (!empty($cargo)) {
                 return $cargo;
             } else {
@@ -87,10 +92,10 @@ class Cargo extends Model
     //根据id 更新快递地址 是否默认
     public function updateCargo($data)
     {
-        $res = Cargo::where('id',$data['id'])->update(['sort'=>'true']);
+        $res = Cargo::where('id',$data['id'])->update(['sort'=>1]);
         if (!empty($res)) {
             //更新不是本id为false
-            $row = Cargo::where('id','!=',$data['id'])->update(['sort'=>'false']);
+            $row = Cargo::where('id','!=',$data['id'])->update(['sort'=>0]);
             return true;
         } else {
             return false;
@@ -106,6 +111,8 @@ class Cargo extends Model
     //根据id 更新快递地址
     public function updateCargoById($data)
     {
+        //转换 sort
+        $data['sort'] = ($data['sort'] == 'true')? 1:0;
         $update_data = [
             'name' => $data['name'],
             'phone' => $data['phone'],
@@ -117,14 +124,24 @@ class Cargo extends Model
         $row = Cargo::where('id',$data['id'])->update($update_data);
         if (!empty($row)){
             //若是 sort 为 true 则除去其他 true 只保留一个默认
-            if ($data['sort'] == 'true') {
+            if ($data['sort'] == 1) {
                 //更新了就行 不用管影响行数
-                 Cargo::where('id','!=',$data['id'])->update(['sort'=>'false']);
+                 Cargo::where('id','!=',$data['id'])->update(['sort'=>0]);
                  return true;
             }
         } else {
             return false;
         }
 
+    }
+
+    //根据id 删除快递地址
+    public function delCargoById($data)
+    {
+       $row = Cargo::where('id',$data['id'])->delete();
+       if (!empty($row)){
+           return true;
+       }
+       return false;
     }
 }

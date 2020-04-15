@@ -10,7 +10,6 @@ class Order extends Model
     protected $table = 'bs_orders';
     protected $guarded = [];
 
-    //定义修改器
     //提取方式
     public function getGainWayBoolAttribute($value)
     {
@@ -77,6 +76,90 @@ class Order extends Model
             }
         } else {
             return false;
+        }
+    }
+
+    //新增订单
+    public function addOrder($data)
+    {
+        //用openid 换取 cid
+        $cid = Mp::where('wx_openid',$data['openId'])->get('id');
+        //自提 "1" 还是 快递收货 "0"
+        if ($data['address'] == "1"){
+            //若是自提  先创建一个默认快递地址
+                //自提地址
+                $address = '广东省惠州市金光大道小花园润发一号店';
+                $cargo_data = [
+                    'cid' => $cid,
+                    'name' => $data['userName'],
+                    'phone' => $data['phone'],
+                    'address' => $address
+                ];
+                //查找是否已经创建过此默认快递地址 否则创建 是则获取id
+                $res = Cargo::where($cargo_data)->get('id');
+                if (empty($res)) {
+                    //若不存在 则创建并返回cargoId
+                    $cargoId = Cargo::create($cargo_data)->id;
+                } else {
+                    //若存在 则获取快递地址id
+                    $cargoId = $res[0]->id;
+                }
+                //将订单商品数据存入 订单商品表 并获取商品id
+                //先将cartList进行解码转为二维数组
+                $cartList = json_decode($data['cartList'],true);
+                $gid = '';
+                for ($i=0; $i<count($cartList); $i++){
+                    $orders_good_data = [
+                        'gid' => $cartList[$i]['id'],
+                        'totalCount' => $cartList[$i]['count'],
+                        'totalPrice' => $cartList[$i]['count'] * $cartList[$i]['price']
+                    ];
+                    $gid .= OrdersGood::create($orders_good_data)->id . ",";
+                }
+                     //将 $gid 插入订单列表 多了一个 ","
+                    $gid = substr($gid,0,strrpos($gid,','));
+                    $order_data = [
+                        'cid' => $cid,
+                        'cargo_id' => $cargoId,
+                        'gain_way_bool' => intval($data['address']),
+                        'pay_way_bool' => intval($data['pay']),
+                        'time' => $data['data']." ".$data['time'],
+                        'gid' => $data['gid']
+                    ];
+                    $res = Order::create($order_data);
+                    if (!empty($res)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+        } else {
+            //先将cartList进行解码转为二维数组
+            $cartList = json_decode($data['cartList'],true);
+            $gid = '';
+            for ($i=0; $i<count($cartList); $i++){
+                $orders_good_data = [
+                    'gid' => $cartList[$i]['id'],
+                    'totalCount' => $cartList[$i]['count'],
+                    'totalPrice' => $cartList[$i]['count'] * $cartList[$i]['price']
+                ];
+                $gid .= OrdersGood::create($orders_good_data)->id . ",";
+            }
+            //将 $gid 插入订单列表 多了一个 ","
+            $gid = substr($gid,0,strrpos($gid,','));
+            $order_data = [
+                'cid' => $cid,
+                'cargo_id' => $data['cargoId'],
+                'gain_way_bool' => intval($data['address']),
+                'pay_way_bool' => intval($data['pay']),
+                'time' => $data['data']." ".$data['time'],
+                'gid' => $gid
+            ];
+            $res = Order::create($order_data);
+            if (!empty($res)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

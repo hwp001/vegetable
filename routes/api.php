@@ -67,4 +67,8 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('getCargoById','AddressController@getCargoById');
     //根据id更新快递地址
     $api->any('updateCargoById','AddressController@updateCargoById');
+    //根据id删除快递地址
+    $api->any('delCargoById','AddressController@delCargoById');
+    //新增订单
+    $api->any('addOrder','OrderController@addOrder');
 });
