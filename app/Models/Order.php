@@ -37,15 +37,15 @@ class Order extends Model
         }
     }
     //订单是否完成
-    public function getTrueOrderAttribute($value)
+/*    public function getTrueOrderAttribute($value)
     {
         switch ($value){
             case 0 : return '未完成'; break;
             case 1 : return '已完成'; break;
             case 2 : return '已取消'; break;
         }
-    }
-
+    }*/
+//----------------------------------------------------------------------
     //根据openid 找到cid 根据cid 匹配订单次数
     //若没订单则返回暂无订单
     //若有订单则返回订单详情
@@ -80,7 +80,6 @@ class Order extends Model
             return false;
         }
     }
-
     //新增订单
     public function addOrder($data)
     {
@@ -162,6 +161,155 @@ class Order extends Model
             return false;
         }
     }
+//-------------------------------------------------------------------------
+    //根据 openid 获得订单
+    public function getOrder($data)
+    {
+        //用openid 换取 cid
+        $cid = DB::table('bs_clients')
+            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
+            ->where('bs_mps.wx_openid',$data['openId'])
+            ->get('bs_clients.id');
+        $cid = $cid[0]->id;
+        $data = [
+            'cid' => $cid
+        ];
+        $res = $this->orderMain($data);
+        //分组
+        return $this->groupRes($res->toArray());
+    }
+    //根据 openid 订单id 获得订单详情
+    public function getOrderById($data)
+    {
+        //用openid 换取 cid
+        $cid = DB::table('bs_clients')
+            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
+            ->where('bs_mps.wx_openid',$data['openId'])
+            ->get('bs_clients.id');
+
+        $cid = $cid[0]->id;
+        $data = [
+            'cid' => $cid,
+            'id'  => $data['id']
+        ];
+        $res = $this->orderMain($data);
+        $res[0]->goodDetail = $this->goodDetail($res[0]->goodDetail);
+        //获取收货地址
+        $res[0]->cargo = ((new Cargo())->getCargoById(['id' => $res[0]->cargo_id]))[0];
+        return $res;
+    }
+    //根据 订单条件 获取订单内容
+    public function orderMain($data)
+    {
+        $res = Order::where($data)->get(['id','cargo_id','gain_way_bool','pay_way_bool','have_way_bool','time','true_order','gid','totalCount','orderNum','totalPrice','true_order']);
+        //通过 gid 换取 商品信息
+        for ($i=0; $i<count($res); $i++){
+            $gid_str = $res[$i]->gid;
+            $res[$i] = $this->arrgid($gid_str,$res[$i]);
+            if (!$res[$i]) {
+                return false;
+            }
+        }
+        return $res;
+    }
+    //处理 gid 0  判断是否有 ","
+    public function arrgid($gid_str,$res)
+    {
+        $goodDetail = [];
+        if (strpos($gid_str,',')){
+            //存在 ","
+            $gid = explode(",",$gid_str);
+            for ($j=0; $j<count($gid); $j++){
+                $goodRes = $this->strGid($gid[$j]);
+                if ($goodRes) {
+                    $goodDetail[] = $goodRes;
+                } else {
+                    //找不到此商品数据
+                    return false;
+                }
+            }
+        } else {
+            //若不存在 则表示只有一个gid 则直接换取商品信息
+            $goodDetail[] = $this->strGid($gid_str);
+            if (!$goodDetail) {
+                return false;
+            }
+         }
+        $res->goodDetail = $goodDetail;
+        return $res;
+    }
+    //处理 gid 1
+    public function strGid($gid)
+    {
+        $goodRes = DB::table('bs_orders_good')
+            ->leftJoin('bs_goods','bs_orders_good.gid','bs_goods.id')
+            ->where('bs_orders_good.id',$gid)
+            ->get(['bs_orders_good.id','gid','bs_goods.title','bs_goods.price','totalCount','totalPrice']);
+        if (!empty($goodRes)){
+            return  $goodRes[0];
+        } else {
+            return false;
+        }
+    }
+    //根据订单状态分组
+    public function groupRes($res)
+    {
+        $groupOne = [];
+        $groupTwo = [];
+        $groupZero = [];
+        for ($i=0; $i<count($res); $i++){
+            if ($res[$i]['true_order'] == 0) {
+                $groupZero[] = $res[$i];
+            } elseif($res[$i]['true_order'] == 1) {
+                $groupOne[] = $res[$i];
+            } else {
+                $groupTwo[] = $res[$i];
+            }
+        }
+        return [
+             $groupZero,
+             $groupOne,
+             $groupTwo
+        ];
+    }
+    //拿取goodDetail 里面 gid 进行商品详细数据获取
+    public function goodDetail($goodDetail)
+    {
+        for ($i=0; $i<count($goodDetail); $i++){
+            $gid = $goodDetail[$i]->gid;
+            $res = (new Goods())->detail('bs_goods.id','=',$gid);
+            if (count($res) == 0) {
+                return false;
+            }
+            //设定要传入的字段
+            $columData = ['description','kind','img','cfav','buy_state'];
+            for ($j=0; $j<count($columData); $j++) {
+                $colum = $columData[$j];
+                $goodDetail[$i]->$colum = ($res[0])->$colum;
+            }
+        }
+        return $goodDetail;
+    }
+//----------------------------------------------------------------------------
+    //根据openid 订单id 改变订单状态
+    public function cancelOrder($data,$true_order)
+    {
+        $cid = DB::table('bs_clients')
+            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
+            ->where('bs_mps.wx_openid',$data['openId'])
+            ->get('bs_clients.id');
+        $cid = $cid[0]->id;
+        $row = Order::where([
+            'cid' => $cid,
+            'id' => $data['id']
+        ])->update(['true_order' => $true_order]);
+        if (!empty($row)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
 
 

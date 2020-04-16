@@ -71,4 +71,14 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('delCargoById','AddressController@delCargoById');
     //新增订单
     $api->any('addOrder','OrderController@addOrder');
+    //根据openid 订单状态 获取订单
+    $api->any('getOrder','OrderController@getOrder');
+    //更加openid 订单id 改变订单状态
+    $api->any('cancelOrder','OrderController@cancelOrder');
+    //如上
+    $api->any('recoverOrder','OrderController@recoverOrder');
+    //如上上
+    $api->any('signOrder','OrderController@signOrder');
+    //根据openid 订单id 获得订单
+    $api->any('getOrderById','OrderController@getOrderById');
 });

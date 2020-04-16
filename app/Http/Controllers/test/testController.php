@@ -16,14 +16,10 @@ class testController extends Controller
     public function index()
     {
         $data = [
-            "id" => "1",
-            'name' => "牛娃",
-            'phone' => "13588888888",
-            'address' => "fafhau",
-            'sex' => "1",
-            'sort' => "true"
+            'openId' => 'omvgd0coPbGcBWzZVoJJLTBpQIYU',
+            'id'  => 13
         ];
-        $res = (new Cargo())->updateCargoById($data);
-        var_dump($res);
+        $res = (new Order())->getOrderById($data);
+        return $res;
     }
 }
