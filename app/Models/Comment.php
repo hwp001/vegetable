@@ -61,20 +61,25 @@ class Comment extends Model
             for ($j=0; $j<count($imgArr); $j++){
                 $pattren = "/upload\/(.*)/";
                 preg_match($pattren,$imgArr[$j],$match);
-                $imgId .= Image::create(['imgUrl'=>$match[1]])->id.',';
+                //存在则更新 否创建
+                $imgId .= Image::updateOrCreate(['imgUrl'=>$match[1]])->id.',';
             }
 
             $imgUrl = substr($imgId,0,strrpos($imgId,','));
-//            return $imgUrl;
-            $comment_data[$i] = [
-                'cid' => $cid,
-                'gid' => $commentList[$i]['gid'],
-                'star' => $commentList[$i]['star'],
-                'description' => $commentList[$i]['description'],
-                'imgUrl' => $imgUrl,
-                'orderNum' => $data['orderNum']
-            ];
-            if (empty(Comment::create($comment_data[$i]))) {
+
+            //存在则更新 否创建
+            if (empty(Comment::updateOrCreate(
+                [
+                    'cid' => $cid,
+                    'gid' => $commentList[$i]['gid'],
+                    'orderNum' => $data['orderNum']
+                ],
+                [
+                    'star' => $commentList[$i]['star'],
+                    'description' => $commentList[$i]['description'],
+                    'imgUrl' => $imgUrl,
+                ]
+            ))) {
                 return false;
             }
         }
