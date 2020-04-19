@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Controllers\Api\V1\Wx\ToolController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Ixudra\Curl\Facades\Curl;
 
 class Comment extends Model
 {
@@ -40,5 +41,43 @@ class Comment extends Model
             return false;
         }
         return ToolController::IdtoUrl($res);
+    }
+
+    public function addComment($data)
+    {
+        //用openid 换取 cid
+        $cid = DB::table('bs_clients')
+            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
+            ->where('bs_mps.wx_openid',$data['openId'])
+            ->get('bs_clients.id');
+        $cid = $cid[0]->id;
+        $comment_data = [];
+        $commentList = json_decode($data['commentList'],true);
+        //循环存储评论信息
+        for ($i=0; $i<count($commentList); $i++){
+            $imgArr = $commentList[$i]['img'];
+            $imgId = '';
+            //将图片存储到本地 再 存入数据库 并提取 图片id
+            for ($j=0; $j<count($imgArr); $j++){
+                $pattren = "/upload\/(.*)/";
+                preg_match($pattren,$imgArr[$j],$match);
+                $imgId .= Image::create(['imgUrl'=>$match[1]])->id.',';
+            }
+
+            $imgUrl = substr($imgId,0,strrpos($imgId,','));
+//            return $imgUrl;
+            $comment_data[$i] = [
+                'cid' => $cid,
+                'gid' => $commentList[$i]['gid'],
+                'star' => $commentList[$i]['star'],
+                'description' => $commentList[$i]['description'],
+                'imgUrl' => $imgUrl,
+                'orderNum' => $data['orderNum']
+            ];
+            if (empty(Comment::create($comment_data[$i]))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

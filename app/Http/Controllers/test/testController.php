@@ -15,11 +15,10 @@ class testController extends Controller
 {
     public function index()
     {
-        $data = [
-            'openId' => 'omvgd0coPbGcBWzZVoJJLTBpQIYU',
-            'id'  => 13
-        ];
-        $res = (new Order())->getOrderById($data);
-        return $res;
+        //正则取出图片所需部分
+        $content = "http://bs01.test/upload/goodImg/50c49b24a3cdf8b5275a5cbba903aeb1.jpg";
+        $pattren = "/upload\/(.*)/";
+        preg_match($pattren,$content,$match);
+        return $match;
     }
 }

@@ -10,6 +10,7 @@ class Order extends Model
 {
     protected $table = 'bs_orders';
     protected $guarded = [];
+    protected $dateFormat = 'Y-m-d H:i';
 
     //提取方式
     public function getGainWayBoolAttribute($value)
@@ -36,6 +37,8 @@ class Order extends Model
             case 1 : return '预定'; break;
         }
     }
+
+
     //订单是否完成
 /*    public function getTrueOrderAttribute($value)
     {
@@ -201,7 +204,7 @@ class Order extends Model
     //根据 订单条件 获取订单内容
     public function orderMain($data)
     {
-        $res = Order::where($data)->get(['id','cargo_id','gain_way_bool','pay_way_bool','have_way_bool','time','true_order','gid','totalCount','orderNum','totalPrice','true_order']);
+        $res = Order::where($data)->get(['id','cargo_id','gain_way_bool','pay_way_bool','have_way_bool','time','true_order','gid','totalCount','orderNum','totalPrice','true_order','created_at']);
         //通过 gid 换取 商品信息
         for ($i=0; $i<count($res); $i++){
             $gid_str = $res[$i]->gid;
@@ -257,7 +260,7 @@ class Order extends Model
         $groupOne = [];
         $groupTwo = [];
         $groupZero = [];
-        for ($i=0; $i<count($res); $i++){
+        for ($i=count($res)-1; $i>0; $i--){
             if ($res[$i]['true_order'] == 0) {
                 $groupZero[] = $res[$i];
             } elseif($res[$i]['true_order'] == 1) {

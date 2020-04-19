@@ -81,4 +81,8 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('signOrder','OrderController@signOrder');
     //根据openid 订单id 获得订单
     $api->any('getOrderById','OrderController@getOrderById');
+    //增加评论
+    $api->any('addComment','CommentController@addComment');
+    //上传图片
+    $api->any('uploadImg','CommentController@uploadImg');
 });
