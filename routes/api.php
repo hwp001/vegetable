@@ -85,4 +85,6 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('addComment','CommentController@addComment');
     //上传图片
     $api->any('uploadImg','CommentController@uploadImg');
+    //获得评论
+    $api->any('getCommentById','CommentController@getCommentById');
 });

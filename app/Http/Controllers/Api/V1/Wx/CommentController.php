@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    //添加评论
     public function addComment(Request $request)
     {
         $data = $request->all();
@@ -33,5 +34,17 @@ class CommentController extends Controller
             }
         }
 
+    }
+
+    //获得评论
+    public function getCommentById(Request $request)
+    {
+        $data = $request->all();
+        $res = (new Comment())->getCommentById($data);
+        if($res) {
+           return json_encode(['statu'=>1,'data'=>$res]);
+        } else {
+            return json_encode(['statu'=>0,'err'=>'没有获取到评论信息']);
+        }
     }
 }

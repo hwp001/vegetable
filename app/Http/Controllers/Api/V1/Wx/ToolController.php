@@ -24,8 +24,10 @@ class ToolController extends Controller
     {
         for ($i=0; $i<count($res); $i++){
             $img_ids = $res[$i]->img;
+            if (strpos($img_ids,'"')) {}
             $pattern = '/"(.*?)"/';
             preg_match($pattern,$img_ids,$match);
+            $match[1] = (!empty($match[1])) ? $match[1] : $img_ids;
             //是否存在 “,”
             $imgIds = strpos($match[1],',') ? explode(',',$match[1]) : [$match[1]];
             //取出图片id

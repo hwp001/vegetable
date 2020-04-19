@@ -35,7 +35,31 @@ class Comment extends Model
                 ->leftJoin('bs_comment','bs_clients.id','cid')
                 ->leftJoin('bs_goods','bs_goods.id','bs_comment.gid')
                 ->where($a, $b, $c)
-                ->get(['bs_comment.id','username','avatar','title','star','bs_comment.description','imgUrl as img','bs_comment.updated_at as time']);
+                 ->orderBy('bs_comment.created_at','desc')
+                ->get(['bs_comment.id','bs_comment.orderNum','username','avatar','title','star','bs_comment.description','imgUrl as img','bs_comment.updated_at as time']);
+
+        if (count($res) == 0) {
+            return false;
+        }
+        return ToolController::IdtoUrl($res);
+    }
+
+    /**
+     * 升级版 根据一种条件获取商品评论 加持版
+     * @param $a
+     * @param $b
+     * @param $c
+     * @return mixed
+     */
+    public function getCommentS($a,$b,$c)
+    {
+        $res = DB::table('bs_clients')
+            ->leftJoin('bs_comment','bs_clients.id','cid')
+            ->leftJoin('bs_orders','bs_orders.orderNum','bs_comment.orderNum')
+            ->leftJoin('bs_goods','bs_goods.id','bs_comment.gid')
+            ->where($a, $b, $c)
+            ->orderBy('bs_comment.created_at','desc')
+            ->get(['bs_comment.id','bs_orders.id as orderId','bs_comment.orderNum','username','avatar','title','star','bs_comment.description','imgUrl as img','bs_comment.updated_at as time']);
 
         if (count($res) == 0) {
             return false;
@@ -84,5 +108,42 @@ class Comment extends Model
             }
         }
         return true;
+    }
+    //根据id获得评论
+    public function getCommentById($data)
+    {
+        //用openid 换取 cid
+        $cid = DB::table('bs_clients')
+            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
+            ->where('bs_mps.wx_openid',$data['openId'])
+            ->get('bs_clients.id');
+        $cid = $cid[0]->id;
+        $res =  $this->getComment('bs_comment.cid','=',$cid);
+        return $this->groupComment($res);
+    }
+    //根据 orderNum 进行分组
+    public function groupComment($res)
+    {
+        $orderNum = [];
+        foreach($res as $k => $v){
+            $orderNum[] = $v->orderNum;
+        }
+        $orderNum = array_values(array_unique($orderNum));
+        $groupOrder = [];
+        for($i=0;$i<count($res);$i++){
+            foreach($res[$i] as $k => $v){
+                if ($k == 'orderNum'){
+                    for ($j=0;$j<count($orderNum);$j++){
+                        if ($v == $orderNum[$j]) {
+                            $groupOrder[$j]['main'][] = $res[$i];
+                            if (!isset($groupOrder[$j]['orderNum'])){
+                                $groupOrder[$j]['orderNum'] = $orderNum[$j];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $groupOrder;
     }
 }
