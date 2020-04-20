@@ -18,8 +18,13 @@ class CategoryController extends Controller
 {
     use ModelForm;
 
-    protected $header = '类型管理';
-
+    protected $header = '商品种类管理列表';
+    protected $description = [
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
+    ];
     public function index()
     {
         return Admin::content(function (Content $content) {
@@ -74,7 +79,7 @@ class CategoryController extends Controller
     public function form()
     {
         return Admin::form(Category::class, function(Form $form){
-            $form->display('id', 'ID');
+            $form->display('id', '编号');
             $form->text('name','类型名称');
             $form->textarea('description','描述');
             $form->select('pid', '父类名称')->options(Category::selectOptions());

@@ -16,7 +16,14 @@ class MpController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Mp';
+    protected $title = '公众号管理';
+
+    protected $description = [
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
+    ];
 
     /**
      * Make a grid builder.
@@ -26,15 +33,15 @@ class MpController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Mp());
-        $grid->column('id', __('Id'));
-        $grid->column('cid', __('Cid'));
+        $grid->column('id', __('编号'));
+        $grid->column('cid', __('客户编号'));
         $grid->column('client.name', _('真实姓名'));
-        $grid->column('mp_openid', __('Mp openid'));
-        $grid->column('wx_openid', __('Wx openid'));
-        $grid->column('unionid', __('Unionid'));
-        $grid->column('state', __('State'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('mp_openid', __('公众号openId'));
+        $grid->column('wx_openid', __('小程序openId'));
+        $grid->column('unionid', __('公众号平台UnionId'));
+        $grid->column('state', __('状态'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -49,14 +56,14 @@ class MpController extends AdminController
     {
         $show = new Show(Mp::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('cid', __('Cid'));
-        $show->field('mp_openid', __('Mp openid'));
-        $show->field('wx_openid', __('Wx openid'));
-        $show->field('unionid', __('Unionid'));
-        $show->field('state', __('State'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('id', __('编号'));
+        $show->field('cid', __('客户编号'));
+        $show->field('mp_openid', __('公众号openId'));
+        $show->field('wx_openid', __('小程序openId'));
+        $show->field('unionid', __('公众号平台UnionId'));
+        $show->field('state', __('状态'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -70,11 +77,11 @@ class MpController extends AdminController
     {
         $form = new Form(new Mp());
 
-        $form->number('cid', __('Cid'));
-        $form->text('mp_openid', __('Mp openid'));
-        $form->text('wx_openid', __('Wx openid'));
-        $form->text('unionid', __('Unionid'));
-        $form->switch('state', __('State'));
+        $form->number('cid', __('客户编号'));
+        $form->text('mp_openid', __('公众号编号'));
+        $form->text('wx_openid', __('小程序编号'));
+        $form->text('unionid', __('微信公众平台UnionId'));
+        $form->switch('state', __('状态'));
 
         return $form;
     }

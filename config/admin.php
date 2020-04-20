@@ -85,8 +85,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Admin',
-
+    'title' => 'O-SHOP',
     /*
     |--------------------------------------------------------------------------
     | Access via `https`

@@ -18,8 +18,13 @@ class GoodsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Goods';
-
+    protected $title = '商品列表';
+    protected $description = [
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
+    ];
     /**
      * Make a grid builder.
      *
@@ -32,16 +37,15 @@ class GoodsController extends AdminController
         $grid->column('id', __('编号'));
         $grid->column('title', __('商品名'));
         $grid->column('description', __('商品描述'));
-        $grid->column('kind_id', __('种类ID'));
-        $grid->column('img_ids', __('图片ID'));
+        $grid->column('kind_id', __('种类编号'));
+        $grid->column('img_ids', __('图片编号'));
         $grid->column('price', __('价格（元）'));
-        $grid->column('count', __('总重量(斤)'));
+        $grid->column('count', __('数量(件)'));
         $grid->column('cavr', __('收藏量'));
         $grid->column('buy_state', __('出售方式'));
         $grid->column('state', __('状态'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -56,18 +60,17 @@ class GoodsController extends AdminController
     {
         $show = new Show(Goods::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('title', __('Title'));
-        $show->field('description', __('Description'));
-        $show->field('kind_id', __('Kind id'));
-        $show->field('img_ids', __('Img ids'));
-        $show->field('price', __('Price'));
-        $show->field('count', __('Count'));
-        $show->field('cavr', __('Cavr'));
-        $show->field('state', __('State'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
+        $show->field('id', __('编号'));
+        $show->field('title', __('商品名'));
+        $show->field('description', __('描述'));
+        $show->field('kind_id', __('种类编号'));
+        $show->field('img_ids', __('图片编号'));
+        $show->field('price', __('价格（元）'));
+        $show->field('count', __('数量（件）'));
+        $show->field('cavr', __('收藏量'));
+        $show->field('state', __('状态'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -81,19 +84,19 @@ class GoodsController extends AdminController
     {
         $form = new Form(new Goods());
 
-        $form->text('title', __('Title'))->creationRules(['required','unique:bs_goods']);
-        $form->text('description', __('Description'))->default('暂无描述');
+        $form->text('title', __('商品名'))->creationRules(['required','unique:bs_goods']);
+        $form->text('description', __('描述'))->default('暂无描述');
 //        $form->number('kind_id', __('Kind id'));
         $form->select('kind_id','商品种类')->options(
             Category::selectOptions()
         );
 //        $form->text('img_ids', __('Img ids'));
-        $form->multipleImage('img_ids','配图')->move('/goodImg');
-        $form->number('price', __('Price'));
-        $form->number('count', __('Count'));
-        $form->number('cavr', __('Cavr'));
+        $form->multipleImage('img_ids','选择图片')->move('/goodImg');
+        $form->number('price', __('价格（元）'));
+        $form->number('count', __('数量（件）'));
+        $form->number('cavr', __('收藏量'));
         $form->switch('buy_state', __('出售方式'));
-        $form->switch('state', __('State'));
+        $form->switch('state', __('状态'));
         return $form;
     }
 

@@ -15,8 +15,13 @@ class CargoController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Cargo';
-
+    protected $title = '收获地址';
+    protected $description = [
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
+    ];
     /**
      * Make a grid builder.
      *
@@ -26,15 +31,14 @@ class CargoController extends AdminController
     {
         $grid = new Grid(new Cargo());
 
-        $grid->column('id', __('Id'));
-        $grid->column('cid', __('Cid'));
-        $grid->column('name', __('Name'));
-        $grid->column('phone', __('Phone'));
-        $grid->column('address', __('Address'));
-        $grid->column('state', __('State'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+        $grid->column('id', __('编号'));
+        $grid->column('cid', __('客户编号'));
+        $grid->column('name', __('收货姓名'));
+        $grid->column('phone', __('收货号码'));
+        $grid->column('address', __('收货地址'));
+        $grid->column('state', __('状态'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -49,15 +53,14 @@ class CargoController extends AdminController
     {
         $show = new Show(Cargo::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('cid', __('Cid'));
-        $show->field('name', __('Name'));
-        $show->field('phone', __('Phone'));
-        $show->field('address', __('Address'));
-        $show->field('state', __('State'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
+        $show->field('id', __('编号'));
+        $show->field('cid', __('客户编号'));
+        $show->field('name', __('收货人'));
+        $show->field('phone', __('收货号码'));
+        $show->field('address', __('收货地址'));
+        $show->field('state', __('状态'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -71,11 +74,11 @@ class CargoController extends AdminController
     {
         $form = new Form(new Cargo());
 
-        $form->number('cid', __('Cid'));
-        $form->text('name', __('Name'));
-        $form->mobile('phone', __('Phone'));
-        $form->text('address', __('Address'));
-        $form->switch('state', __('State'));
+        $form->number('cid', __('客户编号'));
+        $form->text('name', __('收货人'));
+        $form->mobile('phone', __('收货号码'));
+        $form->text('address', __('收获地址'));
+        $form->switch('state', __('状态'));
 
         return $form;
     }

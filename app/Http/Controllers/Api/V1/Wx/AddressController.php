@@ -68,11 +68,18 @@ class AddressController extends Controller
     public function delCargoById(Request $request)
     {
         $data = $request->all();
-        $bool = (new Cargo())->delCargoById($data);
-        if ($bool){
-            return json_encode(['statu'=>1]);
+        //先查看 id 是否在订单表中
+        $hash = (new Cargo())->hashId($data);
+        //若存在 直接返回 false
+        if ($hash){
+            return json_encode(['statu'=>0,'err'=>'此地址已被使用']);
         } else {
-            return json_encode(['statu'=>0,'err'=>'删除失败']);
+            $bool = (new Cargo())->delCargoById($data);
+            if ($bool){
+                return json_encode(['statu'=>1]);
+            } else {
+                return json_encode(['statu'=>0,'err'=>'删除失败']);
+            }
         }
     }
 }

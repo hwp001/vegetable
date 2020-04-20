@@ -15,8 +15,14 @@ class ImageController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Image';
+    protected $title = '图片列表';
 
+    protected $description = [
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
+    ];
     /**
      * Make a grid builder.
      *
@@ -26,12 +32,12 @@ class ImageController extends AdminController
     {
         $grid = new Grid(new Image());
 
-        $grid->column('id', __('Id'));
-        $grid->column('imgUrl', __('ImgUrl'))->image(config('app.url')."/upload",50,50);
-        $grid->column('description', __('Description'));
-        $grid->column('state', __('State'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', __('图片编号'));
+        $grid->column('imgUrl', __('图片地址'))->image(config('app.url')."/upload",50,50);
+        $grid->column('description', __('图片描述'));
+        $grid->column('state', __('状态'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -46,13 +52,12 @@ class ImageController extends AdminController
     {
         $show = new Show(Image::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('imgUrl', __('ImgUrl'));
-        $show->field('description', __('Description'));
-        $show->field('state', __('State'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-//        $show->field('deleted_at', __('Deleted at'));
+        $show->field('id', __('编号'));
+        $show->field('imgUrl', __('图片地址'));
+        $show->field('description', __('描述'));
+        $show->field('state', __('状态'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -65,9 +70,9 @@ class ImageController extends AdminController
     protected function form()
     {
         $form = new Form(new Image());
-        $form->image('imgUrl', __('ImgUrl'))->move('/goodImg');
-        $form->text('description', __('Description'))->default('暂无描述');
-        $form->switch('state', __('State'));
+        $form->image('imgUrl', __('图片地址'))->move('/goodImg');
+        $form->text('description', __('图片描述'))->default('暂无描述');
+        $form->switch('state', __('状态'));
         return $form;
     }
 }

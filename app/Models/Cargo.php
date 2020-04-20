@@ -144,4 +144,15 @@ class Cargo extends Model
        }
        return false;
     }
+
+    //根据id 查看 快递是否 已被使用
+    public function hashId($data)
+    {
+        $res = Order::where('cargo_id',$data['id'])->get();
+        if (count($res) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

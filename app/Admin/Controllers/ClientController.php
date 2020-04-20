@@ -15,9 +15,12 @@ class ClientController extends AdminController
      *
      * @var string
      */
-    protected $title = '客户详情';
+    protected $title = '客户详情表';
     protected $description = [
-        'index' => '显示'
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
     ];
 
     /**
@@ -29,13 +32,13 @@ class ClientController extends AdminController
     {
         $grid = new Grid(new Client());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('编号'));
         $grid->column('username', __('用户名'));
         $grid->column('name', __('姓名'));
         $grid->column('avatar', __('头像'))->image(config('app.url').'/upload',50,50);
         $grid->column('phone', __('电话号码'));
         $grid->column('email', __('邮箱'));
-        $grid->column('ip', __('Ip地址'));
+        $grid->column('ip', __('IP地址'));
         $grid->column('address', __('所在地区'));
         $grid->column('login_times', __('登录次数'));
         $grid->column('decs', __('个性签名'));
@@ -62,25 +65,25 @@ class ClientController extends AdminController
     {
         $show = new Show(Client::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('username', __('Username'));
-        $show->field('name', __('Name'));
-        $show->field('avatar', __('Avatar'))->avatar(config('api.url').'/upload')->image();
-        $show->field('phone', __('Phone'));
-        $show->field('email', __('Email'));
-        $show->field('ip', __('Ip'));
-        $show->field('address', __('Address'));
-        $show->field('login_times', __('Login times'));
-        $show->field('decs', __('Decs'));
-        $show->field('state', __('State'))->as(function ($state) {
+        $show->field('id', __('编号'));
+        $show->field('username', __('用户名'));
+        $show->field('name', __('姓名'));
+        $show->field('avatar', __('头像'))->avatar(config('api.url').'/upload')->image();
+        $show->field('phone', __('手机号'));
+        $show->field('email', __('邮箱'));
+        $show->field('ip', __('IP地址'));
+        $show->field('address', __('所在地区'));
+        $show->field('login_times', __('登录次数'));
+        $show->field('decs', __('个性签名'));
+        $show->field('state', __('状态'))->as(function ($state) {
             switch ($state) {
                 case 0 : $state = '正常';break;
                 case 1 : $state = '拉黑';break;
             }
             return $state;
         });
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -94,16 +97,16 @@ class ClientController extends AdminController
     {
         $form = new Form(new Client());
 
-        $form->text('username', __('Username'));
-        $form->text('name', __('Name'));
-        $form->image('avatar', __('Avatar'));
-        $form->mobile('phone', __('Phone'));
-        $form->email('email', __('Email'));
-        $form->ip('ip', __('Ip'));
-        $form->text('address', __('Address'));
-        $form->number('login_times', __('Login times'));
-        $form->text('decs', __('Decs'));
-        $form->switch('state', __('State'));
+        $form->text('username', __('用户名'));
+        $form->text('name', __('真实姓名'));
+        $form->image('avatar', __('头像'));
+        $form->mobile('phone', __('手机号码'));
+        $form->email('email', __('邮箱'));
+        $form->ip('ip', __('IP地址'));
+        $form->text('address', __('所在地区'));
+        $form->number('login_times', __('登录次数'));
+        $form->text('decs', __('个性签名'));
+        $form->switch('state', __('状态'));
 
         return $form;
     }

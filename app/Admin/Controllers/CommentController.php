@@ -18,8 +18,14 @@ class CommentController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Comment';
+    protected $title = '评论列表';
 
+    protected $description = [
+        'index'  => '首页',
+        'show'   => '展示',
+        'edit'   => '编辑',
+        'create' => '创建',
+    ];
     /**
      * Make a grid builder.
      *
@@ -29,16 +35,15 @@ class CommentController extends AdminController
     {
         $grid = new Grid(new Comment());
 
-        $grid->column('id', __('Id'));
-        $grid->column('cid', __('Cid'));
-        $grid->column('gid', __('Gid'));
-        $grid->column('star', __('Star'));
-        $grid->column('description', __('Description'));
-        $grid->column('imgUrl', __('ImgUrl'));
-        $grid->column('state', __('State'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+        $grid->column('id', __('编号'));
+        $grid->column('cid', __('客户编号'));
+        $grid->column('gid', __('商品编号'));
+        $grid->column('star', __('评分'));
+        $grid->column('description', __('评论'));
+        $grid->column('imgUrl', __('图片编号'));
+        $grid->column('state', __('状态'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -53,16 +58,15 @@ class CommentController extends AdminController
     {
         $show = new Show(Comment::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('cid', __('Cid'));
-        $show->field('gid', __('Gid'));
-        $show->field('star', __('Star'));
-        $show->field('description', __('Description'));
-        $show->field('imgUrl', __('ImgUrl'));
-        $show->field('state', __('State'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
+        $show->field('id', __('编号'));
+        $show->field('cid', __('客户编号'));
+        $show->field('gid', __('商品编号'));
+        $show->field('star', __('评分'));
+        $show->field('description', __('评论'));
+        $show->field('imgUrl', __('图片编号'));
+        $show->field('state', __('状态'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -75,11 +79,11 @@ class CommentController extends AdminController
     protected function form()
     {
         $form = new Form(new Comment());
-        $form->select('cid', __('评论用户'))->options('/admin/getClientsIdAndUsername');
-        $form->select('gid', __('评论商品'))->options('/admin/getGoodsIdAndName')->load('imgUrl','/admin/getImg');
-        $form->select('imgUrl',__('图片ID'))->value('text');
+        $form->select('cid', __('客户编号'))->options('/admin/getClientsIdAndUsername');
+        $form->select('gid', __('商品编号'))->options('/admin/getGoodsIdAndName')->load('imgUrl','/admin/getImg');
+        $form->select('imgUrl',__('图片编号'))->value('text');
         $form->number('star', __('评分级别'))->default(5)->rules('min:1|max:5');
-        $form->text('description', __('评论描述'))->default('暂无描述');
+        $form->text('description', __('评论'))->default('暂无描述');
 //        $form->image('imgUrl', __('商品图片'))->move('/goodImg');
 
         $form->switch('state', __('状态'));
