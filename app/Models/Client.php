@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\V1\Wx\ToolController;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 class Client extends Model
@@ -27,4 +28,22 @@ class Client extends Model
        return $res;
     }
 
+    //根据openid 更新用户信息
+    public function updateUserInfoByOpenId($data)
+    {
+        //根据openid 获得cid
+        $cid = ToolController::getCid($data);
+        $update_data = [
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+            'email' => $data['email'],
+            'decs' => $data['decs']
+        ];
+        $row = Client::where('id',$cid)->update($update_data);
+        if (!empty($row)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

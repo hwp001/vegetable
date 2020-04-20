@@ -43,6 +43,8 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('login', 'LoginController@index');
     //解密用户数据
     $api->any('decode','LoginController@decode');
+    //用户登录过，直接获取用户信息
+    $api->any('loggedUserInfo','LoginController@loggedUserInfo');
     //首页请求接口
     $api->any('home','HomeController@home');
     //推荐 优惠
@@ -87,4 +89,6 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('uploadImg','CommentController@uploadImg');
     //获得评论
     $api->any('getCommentById','CommentController@getCommentById');
+    //更新用户信息资料
+    $api->any('editUserInfo','ProfileController@editUserInfo');
 });

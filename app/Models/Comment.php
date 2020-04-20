@@ -67,14 +67,11 @@ class Comment extends Model
         return ToolController::IdtoUrl($res);
     }
 
+    //新增评论
     public function addComment($data)
     {
         //用openid 换取 cid
-        $cid = DB::table('bs_clients')
-            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
-            ->where('bs_mps.wx_openid',$data['openId'])
-            ->get('bs_clients.id');
-        $cid = $cid[0]->id;
+        $cid = ToolController::getCid($data);
         $comment_data = [];
         $commentList = json_decode($data['commentList'],true);
         //循环存储评论信息
@@ -113,11 +110,7 @@ class Comment extends Model
     public function getCommentById($data)
     {
         //用openid 换取 cid
-        $cid = DB::table('bs_clients')
-            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
-            ->where('bs_mps.wx_openid',$data['openId'])
-            ->get('bs_clients.id');
-        $cid = $cid[0]->id;
+        $cid = ToolController::getCid($data);
         $res =  $this->getCommentS('bs_comment.cid','=',$cid);
         return $this->groupComment($res);
     }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use EasyWeChat\Factory;
-
+use DB;
 class ToolController extends Controller
 {
     public static function wxapp()
@@ -42,5 +42,15 @@ class ToolController extends Controller
             unset($imgID);
         }
         return $res;
+    }
+
+    //根据 openid 获得 cid
+    public static function getCid($data)
+    {
+        $cid = DB::table('bs_clients')
+            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
+            ->where('bs_mps.wx_openid',$data['openId'])
+            ->get('bs_clients.id');
+        return $cid[0]->id;
     }
 }

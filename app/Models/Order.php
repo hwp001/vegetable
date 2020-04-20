@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\V1\Wx\ToolController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
@@ -87,11 +88,7 @@ class Order extends Model
     public function addOrder($data)
     {
         //用openid 换取 cid
-        $cid = DB::table('bs_clients')
-                ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
-                ->where('bs_mps.wx_openid',$data['openId'])
-                ->get('bs_clients.id');
-        $cid = $cid[0]->id;
+        $cid = ToolController::getCid($data);
         //自提 "1" 还是 快递收货 "0"
         if ($data['address'] == "1"){
             //若是自提  先创建一个默认快递地址
@@ -169,11 +166,7 @@ class Order extends Model
     public function getOrder($data)
     {
         //用openid 换取 cid
-        $cid = DB::table('bs_clients')
-            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
-            ->where('bs_mps.wx_openid',$data['openId'])
-            ->get('bs_clients.id');
-        $cid = $cid[0]->id;
+        $cid = ToolController::getCid($data);
         $data = [
             'cid' => $cid
         ];
@@ -185,12 +178,7 @@ class Order extends Model
     public function getOrderById($data)
     {
         //用openid 换取 cid
-        $cid = DB::table('bs_clients')
-            ->leftJoin('bs_mps','bs_clients.id','bs_mps.cid')
-            ->where('bs_mps.wx_openid',$data['openId'])
-            ->get('bs_clients.id');
-
-        $cid = $cid[0]->id;
+        $cid = ToolController::getCid($data);
         $data = [
             'cid' => $cid,
             'id'  => $data['id']

@@ -24,7 +24,7 @@ class LoginController extends Controller
         }
         return json_encode($response);*/
     }
-    //用户信息解密
+    //用户第一次登录 用户信息解密
     public function decode(Request $request)
     {
         //分别获取 code 加密数据 密钥
@@ -58,5 +58,18 @@ class LoginController extends Controller
         }
 
     }
-
+    //用户登录过
+    public function loggedUserInfo(Request $request)
+    {
+        $data = $request::all();
+        $res = (new Client())->getInfoByOpenid($data);
+        if (!empty($res)){
+            return json_encode([
+                'statu'=>1,
+                'userInfo' => $res
+            ]);
+        } else {
+            return json_encode(['statu'=>0,'err'=>'用户信息获取失败']);
+        }
+    }
 }
