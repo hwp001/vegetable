@@ -36,7 +36,6 @@ class Mp extends Model
         //若用户存在，查找公众号表此用户时候有数据
         if(!empty($hasClient)){
             $hasMp = Mp::where('cid',$hasClient->id)->first();
-
             //查看此用户所在公众号表，是否已经插入openid
             if (!empty($hasMp)){
                 //若已经插入，则直接更新openid

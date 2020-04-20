@@ -17,7 +17,7 @@ class testController extends Controller
     public function index()
     {
         $data = ['openId'=>'omvgd0coPbGcBWzZVoJJLTBpQIYU'];
-        $res = (new Comment())->getCommentById($data);
+        $res = (new Client())->getInfoByOpenid($data);
         return $res;
     }
 }

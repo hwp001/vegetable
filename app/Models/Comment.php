@@ -118,7 +118,7 @@ class Comment extends Model
             ->where('bs_mps.wx_openid',$data['openId'])
             ->get('bs_clients.id');
         $cid = $cid[0]->id;
-        $res =  $this->getComment('bs_comment.cid','=',$cid);
+        $res =  $this->getCommentS('bs_comment.cid','=',$cid);
         return $this->groupComment($res);
     }
     //根据 orderNum 进行分组

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Wx;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Mp;
 use Log,Request;
 use Illuminate\Support\Facades\Redis;
@@ -40,14 +41,22 @@ class LoginController extends Controller
         $answer = $app->encryptor->decryptData($res['session_key'], $iv, $encryptedData);
         //更新用户表，公众号表
         $bool = (new Mp())->addWxUserInfo($answer);
-        $data['userInfo'] = $answer;
-        $data['status'] = 1;
-        if (!$bool) {
-            $data['status'] = 0;
+
+        //更新完之后 用户的数据必须从数据库上获取
+        if ($bool) {
+            $res = (new Client())->getInfoByOpenid($answer);
+            if (!empty($res)){
+                return json_encode([
+                    'statu'=>1,
+                    'userInfo' => $res
+                ]);
+            } else {
+                return json_encode(['statu'=>0,'err'=>'用户信息获取失败']);
+            }
+        } else {
+            return json_encode(['statu'=>0,'err'=>'用户信息解密失败']);
         }
-        return json_encode($data);
+
     }
-
-
 
 }
