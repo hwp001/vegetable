@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\OrderCheck;
+use App\Admin\Actions\Post\OrderDisable;
 use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -31,34 +33,54 @@ class OrderController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Order());
-
+        $grid->model()->orderBy('state','asc');
+        $grid->model()->orderBy('true_order','asc');
         $grid->column('id', __('编号'));
         $grid->column('cid', __('客户编号'));
         $grid->column('cargo_id', __('收货地址编号'));
         $grid->column('gid', __('订单商品id'));
         $grid->column('orderNum', __('订单号'));
         $grid->column('gain_way_bool', __('获得方式'))
-            ->display(function ($model){
-                switch ($model->gain_way_bool){
+            ->display(function ($gain_way_bool){
+                switch ($gain_way_bool){
                     case 0: return '到店自提';break;
                     case 1: return '快递配送';break;
                 }
         });
-        $grid->column('pay_way_bool', __('支付方式'))->display(function($model){
-            switch ($model->pay_way_bool){
+        $grid->column('pay_way_bool', __('支付方式'))->display(function($pay_way_bool){
+            switch ($pay_way_bool){
                 case 0: return '微信支付';break;
                 case 1: return '支付宝支付';break;
                 case 2: return '扫码支付';break;
             }
         });
-        $grid->column('time', __('下单时间'));
+        $grid->column('time', __('预订时间'));
         $grid->column('totalCount', __('总数量'));
         $grid->column('totalPrice', __('总价格'));
-        $grid->column('true_order', __('签收状态'))->display(function($model){
-            
+        $grid->column('true_order', __('签收状态'))->display(function($true_order){
+            switch ($true_order){
+                case 0: return '未完成';break;
+                case 1: return '已完成';break;
+                case 2: return '已取消';break;
+            }
         });
-        $grid->column('state', __('订单状态'));
+        $grid->column('state', __('订单状态'))->display(function($state){
+            switch ($state){
+                case 0: return '待审核';break;
+                case 1: return '正常';break;
+                case 2: return '拉黑';break;
+            }
+        })->label([
+            0=>'default',
+            1=>'success',
+            2=>'danger'
+        ]);;
         $grid->column('created_at', __('创建时间'));
+        $grid->actions(function($action){
+            $action->add(new OrderCheck());
+            $action->add(new OrderDisable());
+        });
+
         return $grid;
     }
 

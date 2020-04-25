@@ -42,16 +42,16 @@ class LoginController extends Controller
         //更新用户表，公众号表
         $bool = (new Mp())->addWxUserInfo($answer);
 
-        //更新完之后 用户的数据必须从数据库上获取
+        //更新完之后 用户的数据必须从数据库上获取 保证用户不被拉黑
         if ($bool) {
             $res = (new Client())->getInfoByOpenid($answer);
-            if (!empty($res)){
+            if (count($res) > 0){
                 return json_encode([
                     'statu'=>1,
                     'userInfo' => $res
                 ]);
             } else {
-                return json_encode(['statu'=>0,'err'=>'用户信息获取失败']);
+                return json_encode(['statu'=>0,'err'=>'用户已被禁用']);
             }
         } else {
             return json_encode(['statu'=>0,'err'=>'用户信息解密失败']);

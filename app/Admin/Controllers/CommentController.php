@@ -57,8 +57,8 @@ class CommentController extends AdminController
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
         $grid->actions(function($action){
-            $action->add(new CommentDisable);
             $action->add(new CommentCheck);
+            $action->add(new CommentDisable);
         });
 
         return $grid;

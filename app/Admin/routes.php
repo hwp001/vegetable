@@ -19,6 +19,7 @@ Route::group([
     $router->resource('goods/activity','ActivityController');
     $router->resource('orders/cargo', 'CargoController');
     $router->resource('orders/detail', 'OrderController');
+    $router->resource('ordersGood/detail', 'OrdersGoodController');
 
     //接口数据
     $router->group([],function($api){

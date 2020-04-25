@@ -25,9 +25,9 @@ class Order extends Model
     public function getPayWayBoolAttribute($value)
     {
         switch ($value){
-            case 0 : return '支付宝支付'; break;
-            case 1 : return '微信支付'; break;
-            case 2 : return '现金支付'; break;
+            case 0 : return '微信支付'; break;
+            case 1 : return '支付宝支付'; break;
+            case 2 : return '扫码支付'; break;
         }
     }
     //购物方式
@@ -38,8 +38,16 @@ class Order extends Model
             case 1 : return '预定'; break;
         }
     }
-
-
+    //更改订单状态
+    public function changeStateById($id,$value)
+    {
+        $row = Order::where('id',$id)->update(['state'=>$value]);
+        if (!empty($row)){
+            return true;
+        } else {
+            return false;
+        }
+    }
     //订单是否完成
 /*    public function getTrueOrderAttribute($value)
     {
@@ -167,13 +175,29 @@ class Order extends Model
     {
         //用openid 换取 cid
         $cid = ToolController::getCid($data);
+        $dataOne = [
+            'cid' => $cid,
+            'state' => 1
+        ];
+        $res = $this->orderMain($dataOne);
+        //分组
+        $group = $this->groupRes($res->toArray());
+        //获得未审核数据，并且将未审核数据并进分组
+        array_push($group,$this->getOrderDisable($data));
+        return $group;
+    }
+    //获得根据openid 获得审核中订单
+    public function getOrderDisable($data)
+    {
+        $cid = ToolController::getCid($data);
         $data = [
-            'cid' => $cid
+            'cid' => $cid,
+            'state' => 0
         ];
         $res = $this->orderMain($data);
-        //分组
-        return $this->groupRes($res->toArray());
+        return $res;
     }
+
     //根据 openid 订单id 获得订单详情
     public function getOrderById($data)
     {
@@ -181,7 +205,8 @@ class Order extends Model
         $cid = ToolController::getCid($data);
         $data = [
             'cid' => $cid,
-            'id'  => $data['id']
+            'id'  => $data['id'],
+            'state' => 1
         ];
         $res = $this->orderMain($data);
         $res[0]->goodDetail = $this->goodDetail($res[0]->goodDetail);
@@ -242,7 +267,7 @@ class Order extends Model
             return false;
         }
     }
-    //根据订单状态分组
+    //根据订单签收状态分组
     public function groupRes($res)
     {
         $groupOne = [];

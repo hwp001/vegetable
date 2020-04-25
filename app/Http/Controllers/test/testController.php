@@ -2,24 +2,15 @@
 
 namespace App\Http\Controllers\test;
 
+use App\Http\Controllers\Api\V1\Wx\ToolController;
 use App\Http\Controllers\Controller;
-use App\Models\Cargo;
-use App\Models\Client;
-use App\Models\Comment;
-use App\Models\Goods;
-use App\Models\Mp;
-use App\Models\Order;
-use Request;
-use EasyWeChat\Factory;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
 class testController extends Controller
 {
     public function index()
     {
-        $data  = [
-            'value' => '苹果'
-        ];
-        $res = (new Goods())->searchGood($data);
-        return $res;
+        $mail = 'rununoob.com';  //邮箱地址
+
     }
 }

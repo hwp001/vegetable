@@ -22,6 +22,8 @@ class Comment extends Model
         return $this->hasMany(Comment::class,'gid');
     }
 
+
+
     //改变评论状态
     public function changeStateById($id,$value)
     {

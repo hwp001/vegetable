@@ -12,6 +12,13 @@ class OrderController extends Controller
     public function addOrder(Request $request)
     {
         $data = $request->all();
+        //检查预订时间
+        $time = strtotime($data['date'].''.$data['time']);
+
+        if (($time - time()) < 1000) {
+            return json_encode(['statu'=>0,'err'=>'请选择正确预订时间']);
+        }
+
         $res = (new Order())->addOrder($data);
         if ($res) {
             return json_encode(['statu'=>1,'data'=>$res]);
@@ -28,6 +35,7 @@ class OrderController extends Controller
         if (!$res){
             return json_encode(['statu'=>0,'err'=>'数据获取失败']);
         } else {
+            //获取未审核订单
             return json_encode(['statu'=>1,'data'=>$res]);
         }
     }

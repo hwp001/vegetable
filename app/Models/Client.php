@@ -35,6 +35,7 @@ class Client extends Model
        $res =  DB::table('bs_mps')
             ->leftJoin('bs_clients','bs_mps.cid','bs_clients.id')
             ->where('bs_mps.wx_openid',$data['openId'])
+            ->where('bs_clients.state','!=',2)
             ->get(['bs_clients.id as cid','bs_mps.id as mid','username','name','avatar','phone','email','address','decs','mp_openid','wx_openid','unionid']);
        return $res;
     }
