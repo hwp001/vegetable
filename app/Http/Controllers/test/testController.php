@@ -16,8 +16,10 @@ class testController extends Controller
 {
     public function index()
     {
-        $data = ['openId'=>'omvgd0coPbGcBWzZVoJJLTBpQIYU'];
-        $res = (new Client())->getInfoByOpenid($data);
+        $data  = [
+            'value' => '苹果'
+        ];
+        $res = (new Goods())->searchGood($data);
         return $res;
     }
 }

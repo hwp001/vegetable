@@ -11,6 +11,17 @@ class Client extends Model
     protected $table = 'bs_clients';
     //绑定是否可以批量赋值
     protected $guarded = [];
+    //改变用户状态
+    public function changeStateById($id,$value)
+    {
+        $row = Client::where('id',$id)->update(['state'=>$value]);
+        if (!empty($row)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     //新增用户
     public function addClients($data)

@@ -38,8 +38,17 @@ class MpController extends AdminController
         $grid->column('client.name', _('真实姓名'));
         $grid->column('mp_openid', __('公众号openId'));
         $grid->column('wx_openid', __('小程序openId'));
-        $grid->column('unionid', __('公众号平台UnionId'));
-        $grid->column('state', __('状态'));
+        $grid->column('unionid', __('公众平台unionId'));
+        $grid->column('state', __('状态'))->display(function($state) {
+            switch ($state) {
+                case 0 : $state = '正常';break;
+                case 2 : $state = '禁用';break;
+            }
+            return $state;
+        })->label([
+            0=>'success',
+            2=>'danger'
+        ]);
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
 

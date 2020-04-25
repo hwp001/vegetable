@@ -64,18 +64,26 @@ class HomeController extends Controller
         ];
         return json_encode($data);
     }
-
-
     //根据收藏人数 获取商品数据
     public function dataOne($cfav)
     {
         return (new Goods())->detail('cfav','>',$cfav);
     }
-
     //获取活动表中的商品数据
     public function dataTwo()
     {
         $res = DB::table('dataTwo')->get();
         return ToolController::IdtoUrl($res);
+    }
+    //商品搜索
+    public function searchGood(Request $request)
+    {
+        $data = $request->all();
+        $goodId = (new Goods())->searchGood($data);
+        if (!empty($goodId)) {
+            return json_encode(['statu'=>1,'data'=>$goodId]);
+        } else {
+            return json_encode(['statu'=>0,'err'=>'请重新输入关键字']);
+        }
     }
 }

@@ -34,8 +34,21 @@ class ImageController extends AdminController
 
         $grid->column('id', __('图片编号'));
         $grid->column('imgUrl', __('图片地址'))->image(config('app.url')."/upload",50,50);
-        $grid->column('description', __('图片描述'));
-        $grid->column('state', __('状态'));
+        $grid->column('description', __('图片描述'))->display(function($model){
+            if (empty($model->description)) {
+                return '暂无描述';
+            }
+        });
+        $grid->column('state', __('状态'))->display(function($state) {
+            switch ($state) {
+                case 0 : $state = '正常';break;
+                case 2 : $state = '禁用';break;
+            }
+            return $state;
+        })->label([
+            0=>'success',
+            2=>'danger'
+        ]);
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
 

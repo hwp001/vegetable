@@ -47,6 +47,8 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api\V1\Wx'],function ($ap
     $api->any('loggedUserInfo','LoginController@loggedUserInfo');
     //首页请求接口
     $api->any('home','HomeController@home');
+    //首页搜索
+    $api->any('searchGood','HomeController@searchGood');
     //推荐 优惠
     $api->any('multiData','HomeController@multiData');
     //分类页请求接口

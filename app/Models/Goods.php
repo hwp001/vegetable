@@ -78,5 +78,15 @@ class Goods extends Model
         return ToolController::IdtoUrl($res);
     }
 
+    //根据关键字 模糊搜索商品 并返回首列id
+    public function searchGood($data)
+    {
+        $res = DB::table('bs_goods')
+            ->leftJoin('bs_goods_category as c','bs_goods.kind_id','c.id')
+            ->where('c.name','like','%'.$data['value'].'%')
+            ->orWhere('bs_goods.title','like','%'.$data['value'].'%')
+            ->get('bs_goods.id');
+        return $res[0]->id;
+    }
 
 }

@@ -7,7 +7,9 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-
+use Encore\Admin\Admin;
+use App\Admin\Actions\Post\Replicate;
+use App\Admin\Actions\Post\Disable;
 class ClientController extends AdminController
 {
     /**
@@ -31,7 +33,7 @@ class ClientController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Client());
-
+        $grid->model()->orderBy('state', 'asc');
         $grid->column('id', __('编号'));
         $grid->column('username', __('用户名'));
         $grid->column('name', __('姓名'));
@@ -44,13 +46,24 @@ class ClientController extends AdminController
         $grid->column('decs', __('个性签名'));
         $grid->column('state', __('状态'))->display(function($state) {
             switch ($state) {
-                case 0 : $state = '正常';break;
-                case 1 : $state = '拉黑';break;
+                case 0 : $state = '待审核';break;
+                case 1 : $state = '正常';break;
+                case 2 : $state = '拉黑';break;
             }
             return $state;
-        });
+        })->label([
+            0=>'default',
+            1=>'success',
+            2=>'danger'
+        ]);
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
+
+        $grid->actions(function ($actions) {
+            $actions->add(new Replicate);
+            $actions->add(new Disable);
+
+        });
 
         return $grid;
     }

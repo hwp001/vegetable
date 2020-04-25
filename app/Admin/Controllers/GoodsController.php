@@ -41,9 +41,18 @@ class GoodsController extends AdminController
         $grid->column('img_ids', __('图片编号'));
         $grid->column('price', __('价格（元）'));
         $grid->column('count', __('数量(件)'));
-        $grid->column('cavr', __('收藏量'));
+        $grid->column('cfav', __('收藏量'));
         $grid->column('buy_state', __('出售方式'));
-        $grid->column('state', __('状态'));
+        $grid->column('state', __('状态'))->display(function($state) {
+            switch ($state) {
+                case 0 : $state = '正常';break;
+                case 2 : $state = '禁用';break;
+            }
+            return $state;
+        })->label([
+            0=>'success',
+            2=>'danger'
+        ]);
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
 
@@ -67,7 +76,7 @@ class GoodsController extends AdminController
         $show->field('img_ids', __('图片编号'));
         $show->field('price', __('价格（元）'));
         $show->field('count', __('数量（件）'));
-        $show->field('cavr', __('收藏量'));
+        $show->field('cfav', __('收藏量'));
         $show->field('state', __('状态'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
@@ -94,7 +103,7 @@ class GoodsController extends AdminController
         $form->multipleImage('img_ids','选择图片')->move('/goodImg');
         $form->number('price', __('价格（元）'));
         $form->number('count', __('数量（件）'));
-        $form->number('cavr', __('收藏量'));
+        $form->number('cfav', __('收藏量'));
         $form->switch('buy_state', __('出售方式'));
         $form->switch('state', __('状态'));
         return $form;
