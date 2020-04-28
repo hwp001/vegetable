@@ -135,10 +135,38 @@ class Order extends Model
                 'totalCount' => $cartList[$i]['count'],
                 'totalPrice' => $cartList[$i]['count'] * $cartList[$i]['price']
             ];
-            $gid .= OrdersGood::create($orders_good_data)->id . ",";
+            //新增订单商品表的同时删除商品数量
+            //1、首先取出商品id 和 商品数量 减完之后 在 放回去
+            DB::beginTransaction();
+            $goodres = Goods::where('id',$cartList[$i]['id'])->get('count');
+            if (count($goodres) > 0) {
+                //判断减去订单数量后 是否结果为0
+                $countRes = $goodres[0]->count - $cartList[$i]['count'];
+                //如果大于 0 则 更新数组 否则新增订单失败
+                if ($countRes >= 0) {
+                    $row = Goods::where('id',$cartList[$i]['id'])->update(['count'=>$countRes]);
+                    //若存在更新记录 则新增订单 否则回滚
+                    if ($row > 0) {
+                        $gid .= OrdersGood::create($orders_good_data)->id . ",";
+                        DB::commit();
+                    } else {
+                        DB::rollBack();
+                    }
+                } else {
+                    DB::rollBack();
+                }
+            } else {
+                DB::rollBack();
+            }
+
         }
-        //将 $gid 插入订单列表 多了一个 ","
-        return substr($gid,0,strrpos($gid,','));
+        if (!empty($gid)){
+            //将 $gid 插入订单列表 多了一个 ","
+            return substr($gid,0,strrpos($gid,','));
+        } else {
+            return false;
+        }
+
     }
     //订单数据构建
     public function orderData($cid, $cargoId, $data)
@@ -147,6 +175,9 @@ class Order extends Model
         //先将cartList进行解码转为二维数组
         //处理订单商品
         $gid = $this->subGid($data);
+        if (!$gid) {
+            return false;
+        }
         $order_data = [
             'cid' => $cid,
             'cargo_id' => $cargoId,

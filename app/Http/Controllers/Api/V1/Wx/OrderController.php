@@ -21,7 +21,7 @@ class OrderController extends Controller
         if ($res) {
             return json_encode(['statu'=>1,'data'=>$res]);
         } else {
-            return json_encode(['statu'=>0,'err'=>'订单新增失败']);
+            return json_encode(['statu'=>0,'err'=>'商品数量不足']);
         }
     }
 
