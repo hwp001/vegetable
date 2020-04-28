@@ -20,8 +20,16 @@ class Replicate extends RowAction
         if ($bool) {
             $saying = '审核成功';
             //用户邮箱
-            $to = $model->email;
-            ToolController::sendEmail($to,'您的账号可以正常使用');
+            $email = $model->email;
+            $pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/";
+            //正则验证邮箱
+            preg_match($pattern, $email, $matches);
+            if (count($matches) > 0) {
+                $email = $matches[1];
+            } else {
+                $email = 'hwpoo1@163.com';
+            }
+            ToolController::sendEmail($email,'您的账号可以正常使用');
         } else {
             $saying = '审核失败';
         }

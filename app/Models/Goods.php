@@ -37,18 +37,17 @@ class Goods extends Model
 
     public function getImgIdsAttribute($pictures)
     {
-        return json_decode($pictures, true);
+//        return json_decode($pictures, true);
+        //将获得的 img编号 转换为 图片地址
+        return ToolController::IdToUrlStr($pictures);
     }
 
     //取出特价商品
     public function getGoodsbyDiscount()
     {
-        $discount = self::get()->min('discount');
-
+        $discount = self::get()->min('discount')->where(['count','>',0]);
         $res = self::get(['id', 'title', 'price', 'discount', 'count', 'cavr'])->where('discount', $discount);
-
         return $res[1];
-
     }
 
     /**
@@ -63,16 +62,18 @@ class Goods extends Model
         $res = DB::table('bs_goods')
             ->leftJoin('bs_goods_category as c','kind_id','c.id')
             ->where($a,$b,$c)
+            ->where('bs_goods.count','>',0)
             ->get(['bs_goods.id','title','bs_goods.description','c.name as kind','img_ids as img','price','count','cfav','buy_state'])->toArray();
         //根据imgId => imgUrl
         return ToolController::IdtoUrl($res);
     }
 
-    //获取全部商品详情
+    //获取全部商品详情  商品数量不为0
     public function allDetail()
     {
         $res = DB::table('bs_goods')
             ->leftJoin('bs_goods_category as c','kind_id','c.id')
+            ->where('bs_goods.count','>',0)
             ->get(['bs_goods.id','title','bs_goods.description','c.name as kind','img_ids as img','price','count','cfav','buy_state'])->toArray();
         //根据imgId => imgUrl
         return ToolController::IdtoUrl($res);
@@ -84,9 +85,12 @@ class Goods extends Model
         $res = DB::table('bs_goods')
             ->leftJoin('bs_goods_category as c','bs_goods.kind_id','c.id')
             ->where('c.name','like','%'.$data['value'].'%')
+            ->where('bs_goods','>',0)
             ->orWhere('bs_goods.title','like','%'.$data['value'].'%')
             ->get('bs_goods.id');
         return $res[0]->id;
     }
 
 }
+
+

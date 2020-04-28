@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Api\V1\Wx\ToolController;
+use App\Http\Controllers\Utils\Tool;
 use App\Models\Goods;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -33,17 +35,19 @@ class GoodsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Goods());
-
         $grid->column('id', __('编号'));
         $grid->column('title', __('商品名'));
         $grid->column('description', __('商品描述'));
         $grid->column('kind_id', __('种类编号'));
-        $grid->column('img_ids', __('图片编号'));
+        $grid->column('img_ids', __('图片编号'))->display(function($arr){
+            return ToolController::UrlToId($arr);
+        });
         $grid->column('price', __('价格（元）'));
         $grid->column('count', __('数量(件)'));
         $grid->column('cfav', __('收藏量'));
         $grid->column('buy_state', __('出售方式'));
-        $grid->column('state', __('状态'))->display(function($state) {
+        $grid->column('state', __('状态'))
+            ->display(function($state) {
             switch ($state) {
                 case 0 : $state = '正常';break;
                 case 2 : $state = '禁用';break;
@@ -55,7 +59,6 @@ class GoodsController extends AdminController
         ]);
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
-
         return $grid;
     }
 
@@ -92,14 +95,11 @@ class GoodsController extends AdminController
     protected function form()
     {
         $form = new Form(new Goods());
-
         $form->text('title', __('商品名'))->creationRules(['required','unique:bs_goods']);
         $form->text('description', __('描述'))->default('暂无描述');
-//        $form->number('kind_id', __('Kind id'));
         $form->select('kind_id','商品种类')->options(
             Category::selectOptions()
         );
-//        $form->text('img_ids', __('Img ids'));
         $form->multipleImage('img_ids','选择图片')->move('/goodImg');
         $form->number('price', __('价格（元）'));
         $form->number('count', __('数量（件）'));

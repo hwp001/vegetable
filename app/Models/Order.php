@@ -92,15 +92,15 @@ class Order extends Model
             return false;
         }
     }
-    //新增订单
+
+    //新增订单  //同时要减少商品数量
     public function addOrder($data)
     {
         //用openid 换取 cid
         $cid = ToolController::getCid($data);
         //自提 "1" 还是 快递收货 "0"
         if ($data['address'] == "1"){
-            //若是自提  先创建一个默认快递地址
-                //自提地址
+                 //若是自提  先创建一个默认快递地址
                 $address = '广东省惠州市金光大道小花园润发一号店';
                 $cargo_data = [
                     'cid' => $cid,

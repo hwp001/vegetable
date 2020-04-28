@@ -98,9 +98,7 @@ class Comment extends Model
                 //存在则更新 否创建
                 $imgId .= Image::updateOrCreate(['imgUrl'=>$match[1]])->id.',';
             }
-
             $imgUrl = substr($imgId,0,strrpos($imgId,','));
-
             //存在则更新 否创建
             if (empty(Comment::updateOrCreate(
                 [

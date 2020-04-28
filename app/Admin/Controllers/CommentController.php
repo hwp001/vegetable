@@ -101,13 +101,9 @@ class CommentController extends AdminController
         $form->number('star', __('评分级别'))->default(5)->rules('min:1|max:5');
         $form->text('description', __('评论'))->default('暂无描述');
 //        $form->image('imgUrl', __('商品图片'))->move('/goodImg');
-
         $form->switch('state', __('状态'));
         return $form;
     }
-
-
-
     //根据商品ID 获得图片ID
     public function getImg(Request $request)
     {

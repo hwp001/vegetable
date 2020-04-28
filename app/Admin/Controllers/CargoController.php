@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\AddressCheck;
+use App\Admin\Actions\Post\AddressDisable;
 use App\Models\Cargo;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -39,6 +41,11 @@ class CargoController extends AdminController
         $grid->column('state', __('状态'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
+
+        $grid->actions(function($actions){
+            $actions->add(new AddressCheck);
+            $actions->add(new AddressDisable);
+        });
 
         return $grid;
     }
